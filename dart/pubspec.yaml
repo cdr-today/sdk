@@ -1,0 +1,14 @@
+name: cdr_today_sdk
+version: 0.0.1
+description: >-
+  The Dart SDK of cdr.today
+homepage: https://github.com/cdr-today
+documentation: https://github.com/cdr-today
+environment:
+  sdk: '>=2.10.0 <3.0.0'
+dependencies:
+  bs58: ^1.0.1
+  convert: ^2.1.1
+  ed25519_edwards: ^0.0.5
+
+
