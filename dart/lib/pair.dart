@@ -25,11 +25,3 @@ class Pair {
     return hex.encode(ed.sign(this.pair.privateKey, buf));
   }
 }
-
-void main() {
-  var pair = new Pair();
-  print(pair.address());
-
-  var signedMessage = pair.sign(Uint8List.fromList([1, 2, 3]));
-  print(signedMessage);
-}
