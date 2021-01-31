@@ -10,5 +10,6 @@ dependencies:
   bs58: ^1.0.1
   convert: ^2.1.1
   ed25519_edwards: ^0.0.5
-
-
+  http: ^0.12.2
+dev_dependencies:
+  gql_code_gen: ^0.1.0

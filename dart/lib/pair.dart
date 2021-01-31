@@ -5,7 +5,7 @@ import 'package:ed25519_edwards/ed25519_edwards.dart' as ed;
 
 /* Basic pair for user account */
 class Pair {
-  ed.KeyPair pair;
+  final ed.KeyPair pair;
 
   /* Generate keypair with the default implementation */
   Pair() : this.pair = ed.generateKey();
@@ -24,12 +24,4 @@ class Pair {
   String sign(Uint8List buf) {
     return hex.encode(ed.sign(this.pair.privateKey, buf));
   }
-}
-
-void main() {
-  var pair = new Pair();
-  print(pair.address());
-
-  var signedMessage = pair.sign(Uint8List.fromList([1, 2, 3]));
-  print(signedMessage);
 }
