@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:cdr_today_sdk/pair.dart';
 import 'package:cdr_today_sdk/api/host.dart';
+import 'package:cdr_today_sdk/graphql/ping.gql.dart';
 import 'package:http/http.dart' as http;
 
 class Client {
@@ -21,65 +22,58 @@ class Client {
 
     // Set basic header
     this.headers = {
-      "cdr-today-address": this._pair.address(),
+      'accept': 'application/json',
+      'content-type': 'application/json',
+      'cdr-today-address': this._pair.address(),
     };
   }
 
-  // Recur Get
-  Future<http.Response> get(String url) async {
-    try {
-      return await this
-          ._client
-          .get(url, headers: this.headers)
-          .timeout(this.timeout);
-    } on TimeoutException catch (_) {
-      await this._host.fast(this._client);
-      return await this.get(url);
-    }
-  }
-
   // Recur Post
-  Future<http.Response> post(String url, Map<String, dynamic> body) async {
+  Future<http.Response> query(Map<String, dynamic> body) async {
     try {
       return await this
           ._client
           .post(
-            url,
-            body: body,
+            this._host.host,
+            body: utf8.encode(jsonEncode(body)),
             headers: this.headers,
           )
           .timeout(this.timeout);
     } on TimeoutException catch (_) {
       await this._host.fast(this._client);
-      return await this.post(url, body);
+      return await this.query(body);
     }
   }
 
   /* Get auth token */
   Future<void> auth() async {
     await this._host.fast(this._client);
-    http.Response resp = await this.get(this._host.host);
+    Map<String, dynamic> query = PingQuery().toJson();
+    http.Response resp = await this.query(query);
     if (resp.statusCode == 200) {
       return;
     }
 
-    String uuid = resp.headers["cdr-today-uuid"];
+    String uuid = resp.headers['cdr-today-uuid'];
     if (uuid != null) {
       List<int> bytes = utf8.encode(uuid);
       String signature = this._pair.sign(bytes);
-      this.headers.update("cdr-today-uuid", (String _) => uuid,
-          ifAbsent: () => uuid);
-      this.headers.update("cdr-today-token", (String _) => signature,
-          ifAbsent: () => signature);
+
+      this.headers.addAll({
+        'cdr-today-uuid': uuid,
+        'cdr-today-token': signature,
+      });
     }
 
-    print(this.headers);
-    resp = await this.get(this._host.host);
-    print(resp.body);
+    // Ping - Pong
+    resp = await this.query(query);
+    if (resp.statusCode == 200 && Ping.from(resp).ping == 'pong') {
+      return;
+    } else {
+      await this._host.fast(this._client);
+      return await this.auth();
+    }
   }
 }
 
-void main() async {
-  Client client = Client(Pair(), ["http://0.0.0.0:3000/graphql"]);
-  await client.auth();
-}
+

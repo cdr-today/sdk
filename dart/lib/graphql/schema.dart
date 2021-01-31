@@ -1,26 +1,32 @@
-abstract class Response {
-  Response.fromJson(Map<String, dynamic> json);
-}
-
-
 /* GraphQL Schema */
-abstract class Schema<T extends Response> {
+abstract class Schema {
   final String operationName;
   final String query;
   final Map<String, dynamic> variables;
 
-  Schema({this.query, this.variables, this.operationName});
+  Schema({this.query, this.variables, this.operationName})
+      : assert(query != null);
 
   /* Schema to Json */
   Map<String, dynamic> toJson() {
-    if (this.operationName == null) {
-      return {"query": this.query, "variables": this.variables};
-    } else {
-      return {
-        "query": this.query,
-        "operationName": this.operationName,
-        "variables": this.variables
-      };
+    Map<String, dynamic> query = {
+      "query": this.query,
+    };
+
+    // add variables
+    if (this.variables != null) {
+      query.addAll({
+        "variables": this.variables,
+      });
     }
+
+    // add operation name
+    if (this.operationName != null) {
+      query.addAll({
+        "operationName": this.operationName,
+      });
+    }
+
+    return query;
   }
 }
