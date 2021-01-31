@@ -162,13 +162,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.5"
-  graphql:
-    dependency: "direct main"
-    description:
-      name: graphql
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.1.0"
   hex:
     dependency: transitive
     description:
@@ -177,7 +170,7 @@ packages:
     source: hosted
     version: "0.1.2"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.flutter-io.cn"
@@ -225,13 +218,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.4"
-  mime:
-    dependency: transitive
-    description:
-      name: mime
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.9.7"
   node_interop:
     dependency: transitive
     description:
@@ -281,13 +267,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.5"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.24.1"
   source_span:
     dependency: transitive
     description:
@@ -323,13 +302,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.0"
-  uuid_enhanced:
-    dependency: transitive
-    description:
-      name: uuid_enhanced
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.0.2"
   watcher:
     dependency: transitive
     description:
@@ -337,13 +309,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.9.7+15"
-  websocket:
-    dependency: transitive
-    description:
-      name: websocket
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.5"
   yaml:
     dependency: transitive
     description:

@@ -1,5 +1,10 @@
+abstract class Response {
+  Response.fromJson(Map<String, dynamic> json);
+}
+
+
 /* GraphQL Schema */
-abstract class Schema {
+abstract class Schema<T extends Response> {
   final String operationName;
   final String query;
   final Map<String, dynamic> variables;

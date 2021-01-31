@@ -6,10 +6,10 @@ query auth {
 }
 ''';
 
-class Auth extends Schema {
+class PingQuery extends Schema {
   get operationName => null;
   get query => QUERY;
 
-  Auth();
+  PingQuery();
 }
 

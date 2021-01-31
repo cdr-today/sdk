@@ -5,7 +5,7 @@ import 'package:ed25519_edwards/ed25519_edwards.dart' as ed;
 
 /* Basic pair for user account */
 class Pair {
-  ed.KeyPair pair;
+  final ed.KeyPair pair;
 
   /* Generate keypair with the default implementation */
   Pair() : this.pair = ed.generateKey();
